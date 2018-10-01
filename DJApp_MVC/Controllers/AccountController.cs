@@ -481,5 +481,34 @@ namespace DJApp_MVC.Controllers
             }
         }
         #endregion
+
+
+        #region DJAccount Helpers
+        public ActionResult RegisterDJ(string id)
+        {
+            Dj model = new Dj();
+            model.DjId = id;
+            return View(model);
+        }
+
+        public async Task<ActionResult> FinishRegistration(Dj model)
+        {
+            if (!string.IsNullOrEmpty(model.DJName))
+            {
+                using (RelayDJDevEntities db = new RelayDJDevEntities())
+                {
+                    model.DjId = Guid.NewGuid().ToString();
+                    model.AgreedToTerms = true;
+                    model.Active = true;
+                    model.DjUserId = User.Identity.GetUserId();
+
+                    db.Djs.Add(model);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        #endregion
     }
 }

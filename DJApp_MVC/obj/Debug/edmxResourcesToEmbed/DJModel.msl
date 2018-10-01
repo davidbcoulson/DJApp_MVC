@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RelayDJDevModelStoreContainer" CdmEntityContainer="RelayDJDevEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="RelayDJDevModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="RelayDJDevModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="RelayDJDevModel.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="RelayDJDevModel.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="RelayDJDevModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Djs">
+      <EntityTypeMapping TypeName="RelayDJDevModel.Dj">
+        <MappingFragment StoreEntitySet="Djs">
+          <ScalarProperty Name="DjId" ColumnName="DjId" />
+          <ScalarProperty Name="DjUserId" ColumnName="DjUserId" />
+          <ScalarProperty Name="SpotifyUserName" ColumnName="SpotifyUserName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="AgreedToTerms" ColumnName="AgreedToTerms" />
+          <ScalarProperty Name="QuedUp" ColumnName="QuedUp" />
+          <ScalarProperty Name="DJName" ColumnName="DJName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="RelayDJDevModel.Location">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+          <ScalarProperty Name="PlaylistId" ColumnName="PlaylistId" />
+          <ScalarProperty Name="SpotifyPlayListId" ColumnName="SpotifyPlayListId" />
+          <ScalarProperty Name="SongCurrentlyPlayId" ColumnName="SongCurrentlyPlayId" />
+          <ScalarProperty Name="SongCurrentlyPlayingSpotifyId" ColumnName="SongCurrentlyPlayingSpotifyId" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="SportifyUserName" ColumnName="SportifyUserName" />
+          <ScalarProperty Name="SpotifyDeviceId" ColumnName="SpotifyDeviceId" />
+          <ScalarProperty Name="LocationOwnerId" ColumnName="LocationOwnerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RelayOrders">
+      <EntityTypeMapping TypeName="RelayDJDevModel.RelayOrder">
+        <MappingFragment StoreEntitySet="RelayOrder">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RelayDate" ColumnName="RelayDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="EnteredLocationDate" ColumnName="EnteredLocationDate" />
+          <ScalarProperty Name="RelayOrder1" ColumnName="RelayOrder" />
+          <ScalarProperty Name="PlaylistId" ColumnName="PlaylistId" />
+          <ScalarProperty Name="MaxPlays" ColumnName="MaxPlays" />
+          <ScalarProperty Name="Selected" ColumnName="Selected" />
+          <ScalarProperty Name="NextInQue" ColumnName="NextInQue" />
+          <ScalarProperty Name="ProcessCount" ColumnName="ProcessCount" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Songs">
+      <EntityTypeMapping TypeName="RelayDJDevModel.Song">
+        <MappingFragment StoreEntitySet="Songs">
+          <ScalarProperty Name="SongId" ColumnName="SongId" />
+          <ScalarProperty Name="PlaylistId" ColumnName="PlaylistId" />
+          <ScalarProperty Name="SongTitle" ColumnName="SongTitle" />
+          <ScalarProperty Name="SongArtist" ColumnName="SongArtist" />
+          <ScalarProperty Name="SongSelector" ColumnName="SongSelector" />
+          <ScalarProperty Name="PlayedDate" ColumnName="PlayedDate" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="SpotifyId" ColumnName="SpotifyId" />
+          <ScalarProperty Name="PlayListPosition" ColumnName="PlayListPosition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="RelayDJDevModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
