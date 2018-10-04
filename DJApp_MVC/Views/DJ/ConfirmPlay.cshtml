@@ -1,0 +1,15 @@
+﻿@model DJApp_MVC.Models.Songs
+
+@{
+    ViewBag.Title = "Confirm Play";
+}
+
+<h2>Confirm Play</h2>
+<div class="row">
+    <div>
+        <a href="@Url.Action("ConfirmedPlay", "DJ", new {id=Model.SongSpotifyId})" class="btn btn-primary">Play @Model.SongTitle</a>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,58 @@
+﻿@model DJApp_MVC.Models.Search
+
+@{
+    ViewBag.Title = "SearchArtist";
+}
+
+<h2>Search Artist</h2>
+<p>please search for an Artist</p>
+@using (Html.BeginForm("SearchArtist", "Home", FormMethod.Post))
+{
+
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.TextBoxFor(m => m.ArtistQuery)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+
+}
+@{
+    if (Model.Results != null)
+    {
+        foreach (var result in Model.Results)
+        {
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="@Url.Action("SongsByArtist", "DJ", new { Id=result.ArtistSpotifyId})">
+                        <h3>@result.ArtistName</h3>
+                    </a>
+                </div>
+
+
+                @if (result.ImageUrl != null)
+                {
+                    <div class="col-sm-12">
+                        <a href="@Url.Action("SongsByArtist", "DJ", new { Id=result.ArtistSpotifyId})">
+                            <img src="@result.ImageUrl" style="height:100px;width:auto;" class="img-responsive rounded-circle">
+                        </a>
+                    </div>
+                }
+
+            </div>
+        }
+    }
+    else
+    {
+        <div class="row">
+            <div>
+
+            </div>
+        </div>
+    }
+
+}

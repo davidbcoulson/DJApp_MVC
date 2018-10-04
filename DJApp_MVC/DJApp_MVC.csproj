@@ -203,6 +203,7 @@
       <DependentUpon>DJModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DJ.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -234,10 +235,24 @@
       <DependentUpon>DJModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Album.cs" />
+    <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Devices.cs" />
+    <Compile Include="Models\ExternalIds.cs" />
+    <Compile Include="Models\ExternalUrls.cs" />
+    <Compile Include="Models\ExternalUrls2.cs" />
+    <Compile Include="Models\Followers.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LocationDevices.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PlayerCheck.cs" />
+    <Compile Include="Models\Search.cs" />
+    <Compile Include="Models\SearchResultItem.cs" />
+    <Compile Include="Models\Songs.cs" />
+    <Compile Include="Models\SpotifyUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelayOrder.cs">
       <DependentUpon>DJModel.tt</DependentUpon>
@@ -324,6 +339,11 @@
     <Content Include="Views\Account\RegisterDJ.cshtml" />
     <Content Include="Views\Locations\AddLocation.cshtml" />
     <Content Include="Views\Locations\SelectLocationDevice.cshtml" />
+    <Content Include="Views\DJ\SelectLocation.cshtml" />
+    <Content Include="Views\DJ\SearchArtist.cshtml" />
+    <Content Include="Views\DJ\SongsByArtist.cshtml" />
+    <Content Include="Views\DJ\ConfirmPlay.cshtml" />
+    <Content Include="Views\DJ\SongAdded.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

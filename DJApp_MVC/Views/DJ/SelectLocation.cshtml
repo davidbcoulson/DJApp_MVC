@@ -1,0 +1,15 @@
+﻿@model IEnumerable<DJApp_MVC.Location>
+
+@{
+    ViewBag.Title = "Select Location";
+}
+
+<h2>Select Location</h2>
+
+
+@foreach (var item in Model)
+{
+    <a class="btn btn-primary" href="@Url.Action("UserSelectedLocation", "DJ", new { locationId= item.LocationId })">@Html.DisplayFor(modelItem => item.LocationName)</a>
+}
+
+

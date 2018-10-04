@@ -9,6 +9,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DJApp_MVC.Models;
+using System.Net.Http;
+using System.Web.Configuration;
+using System.Collections.Generic;
+using System.Text;
+using System.Net.Http.Headers;
+using Newtonsoft.Json.Linq;
 
 namespace DJApp_MVC.Controllers
 {
@@ -508,6 +514,107 @@ namespace DJApp_MVC.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult GetCode()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://accounts.spotify.com/authorize/");
+            string scope = HttpUtility.UrlEncode("playlist-modify-private");
+            string urlParameters = "?client_id" + WebConfigurationManager.AppSettings["SpotifyAPIClientID"] + "&scope=" + scope + "&redirect_uri=http://localhost:2960/Account/GetToken/";
+
+            string url = "https://accounts.spotify.com/authorize/" + urlParameters; 
+            return Redirect(url);
+        }
+
+        public async Task<ActionResult> GetToken(string code)
+        {
+            if (!String.IsNullOrEmpty(code))
+            {
+                var result = await GainToken(code);
+                if (result)
+                {
+                    string userName = await GetUsersSpotifyUserName();
+                    return RedirectToAction("ApprovedAccess");
+                }
+                else
+                {
+                    return RedirectToAction("DeniedAccess");
+                }
+            }
+            return View("Error");
+        }
+
+        public async Task<bool> GainToken(string code)
+        {
+            bool accessApproved = false;
+            var spotifyClient = WebConfigurationManager.AppSettings["SpotifyAPIClientID"];
+            var spotifySecret = WebConfigurationManager.AppSettings["SpotifyAPIClientSecretID"];
+
+            HttpClient client = new HttpClient();
+            var authHeader = Convert.ToBase64String(Encoding.Default.GetBytes($"{spotifyClient}:{spotifySecret}"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
+            client.BaseAddress = new Uri("https://accounts.spotify.com/api/token");
+            Dictionary<string, string> prams = new Dictionary<string, string>();
+            prams.Add("grant_type", "authorization_code");
+            prams.Add("code", code);
+            prams.Add("redirect_uri", "http://localhost:2960/Home/GetToken/");
+
+            //var httpContent = new StringContent(thing, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(client.BaseAddress.ToString(), new FormUrlEncodedContent(prams));
+
+            var textResponse = await response.Content.ReadAsStringAsync(); ;
+
+            string first = textResponse.ToString();
+            string[] ara = first.Split(',');
+            string change = ara[0].ToString();
+            string[] aratwo = change.Split(':');
+            string finalToken = aratwo[1].Replace("\"", "");
+
+            if (!String.IsNullOrEmpty(finalToken))
+            {
+                accessApproved = true;
+            }
+            HttpCookie cookie = new HttpCookie("spot_toke");
+            HttpContext.Response.Cookies.Remove("spot_toke");
+            cookie.Value = finalToken;
+            HttpContext.Response.SetCookie(cookie);
+            return accessApproved;
+        }
+
+        public async Task<string> GetUsersSpotifyUserName()
+        {
+            SpotifyUser user = new SpotifyUser();
+            string token = Request.Cookies["spot_toke"].Value.ToString();
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://api.spotify.com/v1/me");
+            string phantomPram = "";
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage response = client.GetAsync(phantomPram).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var result = response.Content.ReadAsStringAsync().Result;
+                string replacement = System.Text.RegularExpressions.Regex.Replace(result, @"\t|\n|\r|\\\\", "");
+                JObject s = JObject.Parse(replacement);
+
+                user = s.ToObject<SpotifyUser>();
+
+                using (RelayDJDevEntities db = new RelayDJDevEntities())
+                {
+                    string userId = User.Identity.GetUserId();
+                    Dj item = db.Djs.Where(x => x.DjUserId == userId).FirstOrDefault();
+                    item.SpotifyUserName = user.id;
+                    db.SaveChanges();
+                }
+            }
+            return user.id;
+        }
+
+        public ActionResult ApprovedAccess()
+        {
+            return RedirectToAction("SelectLocation", "DJ");
+        }
+
 
         #endregion
     }
