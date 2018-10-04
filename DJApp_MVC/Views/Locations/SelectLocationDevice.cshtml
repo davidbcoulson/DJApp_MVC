@@ -1,0 +1,20 @@
+﻿@model DJApp_MVC.Models.LocationDevices
+
+@{
+    ViewBag.Title = "SelectLocationDevice";
+}
+
+<h2>Select Location Device</h2>
+
+<table>
+
+    @foreach (var item in Model.devices)
+    {
+        <tr>
+            <td>
+                <a class="btn btn-primary" href="@Url.Action("LocationDeviceSelected", "Locations", new { deviceId = item.id, locationId = Model.LocationId})">@item.name</a>
+            </td>
+        </tr>
+    }
+
+</table>
