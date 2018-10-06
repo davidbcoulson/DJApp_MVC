@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 namespace DJApp_MVC.Controllers
 {
     [Authorize]
-    public class DJ : Controller
+    public class DJController : Controller
     {
         public ActionResult SelectLocation()
         {
@@ -90,6 +90,60 @@ namespace DJApp_MVC.Controllers
             Search start = new Search();
             return View(start);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SearchArtist(Search searched)
+        {
+            string token = Request.Cookies["spot_toke"].Value.ToString();
+            if (!String.IsNullOrEmpty(token))
+            {
+                searched.Results = await GetArtistListing(searched.ArtistQuery, token);
+            }
+            return View(searched);
+        }
+
+        public async Task<List<SearchResultItem>> GetArtistListing(string artistSearched, string token)
+        {
+            List<SearchResultItem> artistsReturned = new List<SearchResultItem>();
+            string searching = artistSearched.Replace(" ", "%20");
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            client.BaseAddress = new Uri("https://api.spotify.com/v1/search");
+            string urlParameters = "?q=" + searching + "&type=artist";
+
+            HttpResponseMessage response = client.GetAsync(urlParameters).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var result = response.Content.ReadAsStringAsync().Result;
+                string replacement = System.Text.RegularExpressions.Regex.Replace(result, @"\t|\n|\r", "");
+                JObject s = JObject.Parse(replacement);
+
+                SpotifyReturnedItem list = JsonConvert.DeserializeObject<SpotifyReturnedItem>(replacement);
+
+                if (list.Artists.items.Count > 0 && list.Artists.items != null)
+                {
+                    foreach (var sentIn in list.Artists.items)
+                    {
+                        SearchResultItem adding = new SearchResultItem();
+                        adding.ArtistName = sentIn.name;
+                        adding.ArtistSpotifyId = sentIn.id;
+
+                        if (sentIn.images.Count > 0)
+                        {
+                            adding.Image = sentIn.images;
+                            string imageWanted = sentIn.images[0].ToString();
+                            Image imageing = JsonConvert.DeserializeObject<Image>(imageWanted);
+                            adding.ImageUrl = imageing.Url;
+                        }
+
+                        artistsReturned.Add(adding);
+                    }
+                }
+            }
+            return artistsReturned;
+        }
+
 
         public async Task<ActionResult> SongsByArtist(string Id)
         {
@@ -230,7 +284,8 @@ namespace DJApp_MVC.Controllers
             HttpResponseMessage response = await client.PostAsync(client.BaseAddress.ToString(), httpContent);
             if (response.IsSuccessStatusCode)
             {
-                var check = await PlayerCheck(playlist, userName, token);
+                //This is currently still beta for spotify.  
+                //var check = await PlayerCheck(playlist, userName, token);
                 return true;
             }
             else

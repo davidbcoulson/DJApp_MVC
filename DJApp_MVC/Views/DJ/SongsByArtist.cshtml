@@ -7,7 +7,7 @@
 @foreach (var song in Model)
 {
     <div class="row">
-        <div class="col-sm-12"><a href="@Url.Action("ConfirmPlay", "Home", new {songId=song.SongSpotifyId, songTitle=song.SongTitle})">@song.SongTitle</a></div>
+        <div class="col-sm-12"><a href="@Url.Action("ConfirmPlay", "DJ", new {songId=song.SongSpotifyId, songTitle=song.SongTitle})">@song.SongTitle</a></div>
 
         @if (song.SongImageUrl != null)
         {

@@ -51,7 +51,7 @@ namespace DJApp_MVC.Controllers
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://accounts.spotify.com/authorize/");
             string scope = HttpUtility.UrlEncode("playlist-modify-private user-read-playback-state user-modify-playback-state");
-            string urlParameters = "?client_id="+ WebConfigurationManager.AppSettings["SpotifyAPIClientID"] +"&response_type=code&scope=" + scope + "&redirect_uri=http://localhost:2960/Locations/GetLocationToken/";
+            string urlParameters = "?client_id="+ WebConfigurationManager.AppSettings["SpotifyAPIClientID"] +"&response_type=code&scope=" + scope + "&redirect_uri=http://whiskeyandtrust.azurewebsites.net/Locations/GetLocationToken/";
 
             string url = "https://accounts.spotify.com/authorize/" + urlParameters;
             // HttpResponseMessage response = client.GetAsync(urlParameters).Result;  
@@ -88,7 +88,7 @@ namespace DJApp_MVC.Controllers
             Dictionary<string, string> prams = new Dictionary<string, string>();
             prams.Add("grant_type", "authorization_code");
             prams.Add("code", code);
-            prams.Add("redirect_uri", "http://localhost:2960/Locations/GetLocationToken/");
+            prams.Add("redirect_uri", "http://whiskeyandtrust.azurewebsites.net/Locations/GetLocationToken/");
 
             HttpResponseMessage response = await client.PostAsync(client.BaseAddress.ToString(), new FormUrlEncodedContent(prams));
              var textResponse = await response.Content.ReadAsStringAsync(); ;
